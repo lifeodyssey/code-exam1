@@ -30,6 +30,7 @@ dependencies {
     implementation("org.flywaydb:flyway-core")
     implementation("org.postgresql:postgresql")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.flywaydb:flyway-database-postgresql")
     implementation("com.fasterxml.jackson.core:jackson-core")
     implementation("com.fasterxml.jackson.core:jackson-databind")
@@ -47,8 +48,8 @@ dependencies {
 
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
-    testCompileOnly ("org.projectlombok:lombok")
-    testAnnotationProcessor ("org.projectlombok:lombok")
+    testCompileOnly("org.projectlombok:lombok")
+    testAnnotationProcessor("org.projectlombok:lombok")
 
 }
 
@@ -93,7 +94,7 @@ tasks.test {
 }
 
 tasks.check {
-    dependsOn(tasks.jacocoTestCoverageVerification,tasks.spotlessCheck)
+    dependsOn(tasks.jacocoTestCoverageVerification, tasks.spotlessCheck)
 }
 tasks.build {
     dependsOn(tasks.check)
