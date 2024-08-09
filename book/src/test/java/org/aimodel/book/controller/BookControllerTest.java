@@ -107,6 +107,7 @@ class BookControllerTest {
             case "author" -> inputBook.setAuthor(value);
             case "publisher" -> inputBook.setPublisher(value);
             case "price" -> inputBook.setPrice(Integer.parseInt(value));
+            default -> throw new IllegalArgumentException("Unexpected field: " + field);
         }
 
         // When & Then
