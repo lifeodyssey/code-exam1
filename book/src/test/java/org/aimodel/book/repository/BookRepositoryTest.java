@@ -26,4 +26,24 @@ class BookRepositoryTest extends ApplicationTestBase {
     List<Book> books = bookRepository.findAll();
     assertThat(books).isEqualTo(expectedBooks);
   }
+
+  @Test
+  void shouldSaveNewBook() {
+    // Given
+    Book newBook = new Book("新しい本", "新しい著者", "新しい出版社", 1000);
+
+    // When
+    Book savedBook = bookRepository.save(newBook);
+
+    // Then
+    assertThat(savedBook.getId()).isNotNull();
+    assertThat(savedBook.getId()).isEqualTo(5);
+    assertThat(savedBook.getTitle()).isEqualTo("新しい本");
+    assertThat(savedBook.getAuthor()).isEqualTo("新しい著者");
+    assertThat(savedBook.getPublisher()).isEqualTo("新しい出版社");
+    assertThat(savedBook.getPrice()).isEqualTo(1000);
+
+    Book foundBook = bookRepository.findById(savedBook.getId()).orElse(null);
+    assertThat(foundBook).usingRecursiveComparison().isEqualTo(savedBook);
+  }
 }
