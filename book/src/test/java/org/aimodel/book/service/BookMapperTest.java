@@ -20,6 +20,20 @@ class BookMapperTest {
     }
 
     @Test
+    void toDtoShouldMapBookToBookDto() {
+        // Given
+        Book book = new Book(1, "テスト駆動開発", "Kent Beck", "オーム社", 3080);
+
+        // When
+        BookDto bookDto = bookMapper.toDto(book);
+
+        // Then
+        assertThat(bookDto)
+                .extracting(BookDto::getId, BookDto::getTitle, BookDto::getAuthor, BookDto::getPublisher, BookDto::getPrice)
+                .containsExactly(1, "テスト駆動開発", "Kent Beck", "オーム社", 3080);
+    }
+
+    @Test
     void toDtoListShouldMapListOfBooksToListOfBookDtos() {
         // Given
         List<Book> books = Arrays.asList(
@@ -50,5 +64,34 @@ class BookMapperTest {
 
         // Then
         assertThat(result).isEmpty();
+    }
+
+    @Test
+    void toEntityShouldMapBookDtoToBook() {
+        // Given
+        BookDto bookDto = new BookDto(null, "新しい本", "新しい著者", "新しい出版社", 1000);
+
+        // When
+        Book book = bookMapper.toEntity(bookDto);
+
+        // Then
+        assertThat(book)
+                .extracting(Book::getId, Book::getTitle, Book::getAuthor, Book::getPublisher, Book::getPrice)
+                .containsExactly(null, "新しい本", "新しい著者", "新しい出版社", 1000);
+    }
+
+    @Test
+    void toEntityShouldNotSetIdWhenMappingFromBookDto() {
+        // Given
+        BookDto bookDto = new BookDto(1, "本", "著者", "出版社", 1000);
+
+        // When
+        Book book = bookMapper.toEntity(bookDto);
+
+        // Then
+        assertThat(book.getId()).isNull();
+        assertThat(book)
+                .extracting(Book::getTitle, Book::getAuthor, Book::getPublisher, Book::getPrice)
+                .containsExactly("本", "著者", "出版社", 1000);
     }
 }

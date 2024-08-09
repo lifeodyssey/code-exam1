@@ -5,4 +5,5 @@ import org.aimodel.book.controller.dto.BookDto;
 
 public interface BookService {
   List<BookDto> getAllBooks();
+  BookDto createBook(BookDto bookDto);
 }

@@ -9,9 +9,11 @@ import java.util.List;
 import org.aimodel.book.controller.dto.BookDto;
 import org.aimodel.book.repository.BookRepository;
 import org.aimodel.book.repository.entity.Book;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 class BookServiceImplTest {
   @Mock
@@ -22,7 +24,10 @@ class BookServiceImplTest {
   @InjectMocks
   private BookServiceImpl bookService;
 
-
+  @BeforeEach
+  void setUp() {
+    MockitoAnnotations.openMocks(this);
+  }
   @Test
   void getAllBooksShouldReturnAllBooksAsDto() {
     // Given
@@ -60,5 +65,27 @@ class BookServiceImplTest {
     assertThat(actualBookDtos).isEmpty();
     verify(bookRepository, times(1)).findAll();
     verify(bookMapper, times(1)).toDtoList(List.of());
+  }
+
+  @Test
+  void createBookShouldSaveAndReturnBookAsDto() {
+    // Given
+    BookDto inputBookDto = new BookDto(null, "新しい本", "新しい著者", "新しい出版社", 1000);
+    Book inputBook = new Book(null, "新しい本", "新しい著者", "新しい出版社", 1000);
+    Book savedBook = new Book(1, "新しい本", "新しい著者", "新しい出版社", 1000);
+    BookDto expectedBookDto = new BookDto(1, "新しい本", "新しい著者", "新しい出版社", 1000);
+
+    when(bookMapper.toEntity(inputBookDto)).thenReturn(inputBook);
+    when(bookRepository.save(inputBook)).thenReturn(savedBook);
+    when(bookMapper.toDto(savedBook)).thenReturn(expectedBookDto);
+
+    // When
+    BookDto actualBookDto = bookService.createBook(inputBookDto);
+
+    // Then
+    assertThat(actualBookDto).isEqualTo(expectedBookDto);
+    verify(bookMapper, times(1)).toEntity(inputBookDto);
+    verify(bookRepository, times(1)).save(inputBook);
+    verify(bookMapper, times(1)).toDto(savedBook);
   }
 }
