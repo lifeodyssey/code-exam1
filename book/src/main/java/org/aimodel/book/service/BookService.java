@@ -1,9 +1,8 @@
 package org.aimodel.book.service;
 
-import org.aimodel.book.repository.entity.Book;
 import java.util.List;
-import java.util.Optional;
+import org.aimodel.book.controller.dto.BookDto;
 
 public interface BookService {
-    List<Book> getAllBooks();
+  List<BookDto> getAllBooks();
 }
