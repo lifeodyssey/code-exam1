@@ -6,10 +6,9 @@ import lombok.*;
 @Entity
 @Table(name = "books")
 @Data
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Book {
 
   @Id

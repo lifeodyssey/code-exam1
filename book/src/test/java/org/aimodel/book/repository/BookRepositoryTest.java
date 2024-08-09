@@ -30,8 +30,12 @@ class BookRepositoryTest extends ApplicationTestBase {
   @Test
   void shouldSaveNewBook() {
     // Given
-    Book newBook = new Book("新しい本", "新しい著者", "新しい出版社", 1000);
-
+    Book newBook = Book.builder()
+            .title("新しい本")
+            .author("新しい著者")
+            .publisher("新しい出版社")
+            .price(1000)
+            .build();
     // When
     Book savedBook = bookRepository.save(newBook);
 
