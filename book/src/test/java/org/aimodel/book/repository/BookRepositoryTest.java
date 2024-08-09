@@ -8,13 +8,12 @@ import org.aimodel.book.repository.entity.Book;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
-@Testcontainers
 @SpringBootTest
 class BookRepositoryTest extends ApplicationTestBase {
 
-  @Autowired private BookRepository bookRepository;
+  @Autowired
+  private BookRepository bookRepository;
 
   @Test
   void shouldFindAllBooks() {

@@ -5,9 +5,13 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
+@Testcontainers
 public abstract class ApplicationTestBase {
-  @Container @ServiceConnection
+
+  @Container
+  @ServiceConnection
   private static final PostgreSQLContainer<?> postgreSQLContainer =
       new PostgreSQLContainer<>("postgres:latest")
           .withDatabaseName("bookdb")
