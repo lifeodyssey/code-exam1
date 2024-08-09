@@ -3,13 +3,12 @@ plugins {
     jacoco
     application
     idea
-    checkstyle
     id("org.springframework.boot") version "3.3.2"
     id("io.spring.dependency-management") version "1.1.6"
     id("org.owasp.dependencycheck") version "8.4.0"
     id("org.sonarqube") version "4.3.1.3277"
     id("com.github.spotbugs") version "6.0.19"
-
+    id("com.diffplug.spotless") version "5.0.0"
 }
 
 group = "org.aimodel"
@@ -29,10 +28,9 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.flywaydb:flyway-core")
-    implementation ("org.postgresql:postgresql")
+    implementation("org.postgresql:postgresql")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.flywaydb:flyway-database-postgresql")
-
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.boot:spring-boot-testcontainers")
@@ -50,23 +48,29 @@ tasks.withType<Test> {
     useJUnitPlatform()
 }
 
-
-
 jacoco {
     toolVersion = "0.8.9"
     reportsDirectory.set(layout.buildDirectory.dir("customJacocoReportDir"))
 }
 
+val testCoverageExclusions = listOf(
+    "**/*Application*",
+)
+val excludeTestFiles: FileTree = sourceSets.main.get().output.asFileTree.matching {
+    testCoverageExclusions.map { exclude(it) }.toTypedArray()
+}
 tasks.jacocoTestReport {
     dependsOn(tasks.test)
+
     reports {
+        classDirectories.setFrom(excludeTestFiles)
         xml.required.set(false)
         csv.required.set(false)
         html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
     }
 }
-
 tasks.jacocoTestCoverageVerification {
+    classDirectories.setFrom(excludeTestFiles)
     violationRules {
         rule {
             limit {
@@ -81,7 +85,7 @@ tasks.test {
 }
 
 tasks.check {
-    dependsOn(tasks.jacocoTestCoverageVerification,tasks.spotbugsMain,tasks.spotbugsTest)
+    dependsOn(tasks.jacocoTestCoverageVerification,tasks.spotlessCheck)
 }
 tasks.build {
     dependsOn(tasks.check)

@@ -13,7 +13,8 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @Testcontainers
 class BookApplicationTests {
 
-  @Container @ServiceConnection
+  @Container
+  @ServiceConnection
   static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:latest");
 
   @DynamicPropertySource
