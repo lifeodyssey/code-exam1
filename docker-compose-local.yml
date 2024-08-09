@@ -1,0 +1,36 @@
+services:
+  app:
+    build: .
+    container_name: ai-model-book
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/ai_model_db
+      - SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
+    depends_on:
+      - db
+    networks:
+      - ai-model-network
+
+  db:
+    image: postgres:latest
+    container_name: ai-model-db
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - ai-model-volume:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - ai-model-network
+
+volumes:
+  ai-model-volume:
+
+networks:
+  ai-model-network:
+    driver: bridge
