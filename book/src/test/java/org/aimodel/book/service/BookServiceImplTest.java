@@ -9,22 +9,19 @@ import java.util.List;
 import org.aimodel.book.controller.dto.BookDto;
 import org.aimodel.book.repository.BookRepository;
 import org.aimodel.book.repository.entity.Book;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 class BookServiceImplTest {
-  @Mock private BookRepository bookRepository;
-  @Mock private BookMapper bookMapper;
+  @Mock
+  private BookRepository bookRepository;
+  @Mock
+  private BookMapper bookMapper;
 
-  @InjectMocks private BookServiceImpl bookService;
+  @InjectMocks
+  private BookServiceImpl bookService;
 
-  @BeforeEach
-  void setUp() {
-    MockitoAnnotations.openMocks(this);
-  }
 
   @Test
   void getAllBooksShouldReturnAllBooksAsDto() {
