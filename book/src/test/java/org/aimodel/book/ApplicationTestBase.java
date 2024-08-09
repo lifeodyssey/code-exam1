@@ -10,19 +10,19 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @Testcontainers
 public abstract class ApplicationTestBase {
 
-  @Container
-  @ServiceConnection
-  private static final PostgreSQLContainer<?> postgreSQLContainer =
-      new PostgreSQLContainer<>("postgres:latest")
-          .withDatabaseName("bookdb")
-          .withUsername("test")
-          .withPassword("test");
+    @Container
+    @ServiceConnection
+    private static final PostgreSQLContainer<?> postgreSQLContainer =
+            new PostgreSQLContainer<>("postgres:latest")
+                    .withDatabaseName("bookdb")
+                    .withUsername("test")
+                    .withPassword("test");
 
-  @DynamicPropertySource
-  static void configureProperties(DynamicPropertyRegistry registry) {
-    registry.add("spring.datasource.url", postgreSQLContainer::getJdbcUrl);
-    registry.add("spring.datasource.username", postgreSQLContainer::getUsername);
-    registry.add("spring.datasource.password", postgreSQLContainer::getPassword);
-    registry.add("spring.datasource.driver-class-name", postgreSQLContainer::getDriverClassName);
-  }
+    @DynamicPropertySource
+    static void configureProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.url", postgreSQLContainer::getJdbcUrl);
+        registry.add("spring.datasource.username", postgreSQLContainer::getUsername);
+        registry.add("spring.datasource.password", postgreSQLContainer::getPassword);
+        registry.add("spring.datasource.driver-class-name", postgreSQLContainer::getDriverClassName);
+    }
 }
