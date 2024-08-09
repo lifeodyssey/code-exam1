@@ -42,6 +42,9 @@ dependencies {
 
     runtimeOnly("org.postgresql:postgresql")
 
+    compileOnly("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok")
+
 }
 
 tasks.withType<Test> {
