@@ -4,9 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 import org.aimodel.book.controller.dto.BookDto;
 import org.aimodel.book.controller.dto.GetAllBooksResponse;
 import org.junit.jupiter.api.Test;
