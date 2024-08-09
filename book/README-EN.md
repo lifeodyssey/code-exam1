@@ -15,7 +15,7 @@ Please make sure you have installed the following tools:
 
 ```bash
 export $(cat .env | xargs)
-./gradlew clean build
+./book/gradlew -p book clean build
 docker-compose -f docker-compose-local.yml up --build -d
 ```
 
@@ -24,7 +24,7 @@ docker-compose -f docker-compose-local.yml up --build -d
 1. Get all the books
 
 ```bash
-curl -X GET http://localhost:8081/books/ -H "Accept: application/json"
+curl -X GET http://localhost:8081/books -H "Accept: application/json"
 ```
 
 Note: There are four books in the response. Details can be see in
@@ -90,7 +90,7 @@ I didn't use complicated DDD to follow the `` Keep It Simple and Stupid`` rule.
     - Jacoco: test coverage is higher than 90% (actually 100% until now). This can be checked by running the following
       command:
       ```bash
-      ./gradlew clean build jacocoTestReport
+      ./book/gradlew -p book clean build jacocoTestReport
       ```
       And then open the ``Book/build/jacocoHtml/index.html`` file in the browser.
 

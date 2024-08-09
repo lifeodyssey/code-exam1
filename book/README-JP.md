@@ -15,7 +15,7 @@
 
 ```bash
 export $(cat .env | xargs)
-./gradlew clean build
+./book/gradlew -p book clean build 
 docker-compose -f docker-compose-local.yml up --build -d
 ```
 
@@ -24,7 +24,7 @@ docker-compose -f docker-compose-local.yml up --build -d
 1. すべての本を取得する
 
 ```bash
-curl -X GET http://localhost:8081/books/ -H "Accept: application/json"
+curl -X GET http://localhost:8081/books -H "Accept: application/json"
 ```
 
 注意：レスポンスには4冊の本があります。詳細は
@@ -87,7 +87,7 @@ curl -X POST http://localhost:8081/books \
     - Spotbugs
     - Jacoco：テストカバレッジは90%以上（現在は100%）。以下のコマンドで確認できます：
       ```bash
-      ./gradlew clean build jacocoTestReport
+      ./book/gradlew -p book clean build jacocoTestReport
       ```
       そして、`book/build/jacocoHtml/index.html`ファイルをブラウザで開きます。
 
